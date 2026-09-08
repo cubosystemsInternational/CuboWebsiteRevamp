@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored as-is from the React Bits registry (reactbits.dev) — not
+    // authored by this project, kept unmodified so it stays a clean drop-in
+    // when upstream ships updates.
+    "src/components/OptionWheel.jsx",
   ]),
 ]);
 
