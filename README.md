@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cubo Systems Website
 
-## Getting Started
+Next.js + TypeScript site for cubosystems.com.
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router) + TypeScript
+- Framer Motion for animation (scroll reveals, hero text stagger, stat counters)
+- Contact form backed by a Next.js API route (`src/app/api/contact/route.ts`) that sends email via [Resend](https://resend.com)
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contact form setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.local.example` to `.env.local` and fill in:
 
-## Learn More
+```
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=
+```
 
-To learn more about Next.js, take a look at the following resources:
+`CONTACT_FROM_EMAIL` must be on a domain verified with Resend. Without these set, the form shows a graceful error instead of sending.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/            # App Router pages, layout, global styles, API routes
+├── components/      # Page sections (Header, Hero, Cards, Technology, Contact, ...)
+└── lib/content.ts   # Site copy/data (services, solutions, stats, testimonials)
+public/media/         # Site imagery
+```
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project uses a server-rendered API route for the contact form, so it needs a Node-capable host (e.g. Vercel) rather than static S3/CloudFront hosting. `config.json`, `dist.json`, and `policy.json` at the repo root are the AWS CloudFront/S3 configuration from the site's previous static-hosting setup — kept for reference until the deployment target is finalized.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## History
+
+This project replaced an earlier Vite + React implementation, which itself replaced a static HTML export of the original Umbraco-based site. The prior Vite version is preserved at `../cubosystems-site-legacy-backup`.
